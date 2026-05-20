@@ -108,8 +108,8 @@ st.title("Emotion Classification Comparison")
 user_input = st.text_area("Enter a comment:")
 
 if st.button("Predict"):
-    left_col, right_col = st.columns(2)
     st.subheader("Predictions")
+    left_col, right_col = st.columns(2)
     with left_col:
         # Single-label
         st.subheader("Single-Label Models")
