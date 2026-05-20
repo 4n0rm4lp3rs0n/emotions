@@ -1,13 +1,15 @@
-emo-multi: mutlilabel pred
+cách chạy app: `streamlit run app.py`
 
-emo-single: singlelabel pred
+- emo-multi: mutlilabel pred
+- emo-single: singlelabel pred
 
-manual_dt: tự tạo DT cho streamlit app lấy
+`manual_dt`: tự tạo DT cho streamlit app lấy
 
-các file .pkl trong folder single và multi: file model(tham số, trọng số các thứ)
+các file `.pkl` trong folder single và multi: file model(tham số, trọng số các thứ)
 
-vectorizer.pkl và vocab.pkl: TF-IDF và BoW cho PP
+`vectorizer.pkl` và `vocab.pkl`: TF-IDF và BoW cho PP
 
-Hình đồ thị phân phối: trong folder single/__results__files, hình đầu tiên
+Hình đồ thị phân phối: trong folder `single/__results__files`, hình đầu tiên
+![label distribution](https://github.com/4n0rm4lp3rs0n/emotions/blob/main/single/__results___files/__results___16_0.png?raw=true)
 
 Các confusion matrix cho từng model (model nào thì xem cell trong file .ipynb và tên tương ứng)
