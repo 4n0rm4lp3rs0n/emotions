@@ -108,40 +108,36 @@ st.title("Emotion Classification Comparison")
 user_input = st.text_area("Enter a comment:")
 
 if st.button("Predict"):
+    left_col, right_col = st.columns(2)
     st.subheader("Predictions")
-    # Single-label
-    st.subheader("Single-Label Models")
-    for name, info in singlelabel_models.items():
-        model = info["model"]
-        if info["type"] == "bow":
-            tokens = text_split(user_input)
-            x = vectorize(tokens, vocab)
-            x = np.array([x])
-        else:
+    with left_col:
+        # Single-label
+        st.subheader("Single-Label Models")
+        for name, info in singlelabel_models.items():
+            model = info["model"]
+            if info["type"] == "bow":
+                tokens = text_split(user_input)
+                x = vectorize(tokens, vocab)
+                x = np.array([x])
+            else:
+                x = vectorizer.transform([user_input])
+            pred = model.predict(x)
+            emotion = label_columns[pred[0]]
+            st.write(f"**{name}** → {emotion}")
+    
+    with right_col:
+        # Multilabel
+        st.subheader("Multi-Label Models")
+        for name, model in multilabel_models.items():
             x = vectorizer.transform([user_input])
-        pred = model.predict(x)
-        emotion = label_columns[pred[0]]
-        st.write(f"**{name}** → {emotion}")
-
-    # Multilabel
-    st.subheader("Multi-Label Models")
-    for name, model in multilabel_models.items():
-        x = vectorizer.transform([user_input])
-        # print(f"Name: {name}, Model: {model}")
-        pred = model.predict(x)
-        probs = model.predict_proba(x)[0]
-        probs = model.predict_proba(x)[0]
-        threshold = 0.3
-        selected = np.where(probs >= threshold)[0]
-        if len(selected) == 0:
-            selected = np.argsort(probs)[-2:][::-1]
-        st.write(f"**{name}**")
-        for i in selected:
-            st.write(f"{label_columns[i]}: {probs[i]:.3f}")
-        # emotions = []
-        # for i, val in enumerate(pred[0]):
-        #     if val == 1:
-        #         emotions.append(label_columns[i])
-        # if len(emotions) == 0:
-        #     emotions = ["No emotion predicted"]
-        # st.write(f"**{name}** → {', '.join(emotions)}")
+            # print(f"Name: {name}, Model: {model}")
+            pred = model.predict(x)
+            probs = model.predict_proba(x)[0]
+            probs = model.predict_proba(x)[0]
+            threshold = 0.3
+            selected = np.where(probs >= threshold)[0]
+            if len(selected) == 0:
+                selected = np.argsort(probs)[-2:][::-1]
+            st.write(f"**{name}**")
+            for i in selected:
+                st.write(f"{label_columns[i]}: {probs[i]:.3f}")
